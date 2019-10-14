@@ -59,7 +59,9 @@ const TemplateWrapper = ({ children }) => {
         />
       </Helmet>
       <Navbar />
-      <div style={{ backgroundColor: "black", minHeight: "calc(100vh - 292px)" }}>
+      <div
+        style={{ backgroundColor: "black", minHeight: "calc(100vh - 292px)" }}
+      >
         {children}
       </div>
       <Footer />

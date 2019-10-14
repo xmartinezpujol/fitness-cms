@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.scss";
 import "slick-carousel/slick/slick-theme.scss";
 
 import { Button, Card, Icon, Text, View } from "wasabi-kit";
+import { getPlaylistVideos } from "../../services/youtube";
 
 const dimensions = {
   xs: { w: 210, h: 240 },
@@ -21,7 +22,19 @@ const imgHeights = {
   lg: 165
 };
 
+const PLAYLIST_ID = "PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84";
+
 class VideoSlider extends React.Component {
+  state = {
+    videos: []
+  };
+
+  componentDidMount() {
+    getPlaylistVideos("snippet", PLAYLIST_ID).then(response =>
+      this.setState({ videos: response.data.items })
+    );
+  }
+
   render() {
     const settings = {
       dots: true,
@@ -30,6 +43,7 @@ class VideoSlider extends React.Component {
       slidesToShow: 3,
       slidesToScroll: 1
     };
+    const { videos } = this.state;
     return (
       <div
         style={{
@@ -39,126 +53,28 @@ class VideoSlider extends React.Component {
         }}
       >
         <Slider {...settings}>
-          <Card
-            cover="https://upload.wikimedia.org/wikipedia/commons/1/1e/Indiandishes.jpg"
-            color="black"
-            onClick={() => console.log("video clicked")}
-            clickable
-            zoom
-            dimensions={dimensions}
-            imgHeight={imgHeights}
-          >
-            <View
-              justify="center"
-              type="sashimi"
-              width={80}
-              round={6}
-            >
-              <Text style={{ fontWeight: "bold", color: "white" }} type="span">
-                3:46
-              </Text>
-            </View>
-          </Card>
-          <Card
-            cover="https://upload.wikimedia.org/wikipedia/commons/1/1e/Indiandishes.jpg"
-            color="black"
-            onClick={() => console.log("video clicked")}
-            clickable
-            zoom
-            dimensions={dimensions}
-            imgHeight={imgHeights}
-          >
-            <View
-              justify="center"
-              type="sashimi"
-              width={80}
-              round={6}
-            >
-              <Text style={{ fontWeight: "bold", color: "white" }} type="span">
-                3:46
-              </Text>
-            </View>
-          </Card>
-          <Card
-            cover="https://upload.wikimedia.org/wikipedia/commons/1/1e/Indiandishes.jpg"
-            color="black"
-            onClick={() => console.log("video clicked")}
-            clickable
-            zoom
-            dimensions={dimensions}
-            imgHeight={imgHeights}
-          >
-            <View
-              justify="center"
-              type="sashimi"
-              width={80}
-              round={6}
-            >
-              <Text style={{ fontWeight: "bold", color: "white" }} type="span">
-                3:46
-              </Text>
-            </View>
-          </Card>
-          <Card
-            cover="https://upload.wikimedia.org/wikipedia/commons/1/1e/Indiandishes.jpg"
-            color="black"
-            onClick={() => console.log("video clicked")}
-            clickable
-            zoom
-            dimensions={dimensions}
-            imgHeight={imgHeights}
-          >
-            <View
-              justify="center"
-              type="sashimi"
-              width={80}
-              round={6}
-            >
-              <Text style={{ fontWeight: "bold", color: "white" }} type="span">
-                3:46
-              </Text>
-            </View>
-          </Card>
-          <Card
-            cover="https://upload.wikimedia.org/wikipedia/commons/1/1e/Indiandishes.jpg"
-            color="black"
-            onClick={() => console.log("video clicked")}
-            clickable
-            zoom
-            dimensions={dimensions}
-            imgHeight={imgHeights}
-          >
-            <View
-              justify="center"
-              type="sashimi"
-              width={80}
-              round={6}
-            >
-              <Text style={{ fontWeight: "bold", color: "white" }} type="span">
-                3:46
-              </Text>
-            </View>
-          </Card>
-          <Card
-            cover="https://upload.wikimedia.org/wikipedia/commons/1/1e/Indiandishes.jpg"
-            color="black"
-            onClick={() => console.log("video clicked")}
-            clickable
-            zoom
-            dimensions={dimensions}
-            imgHeight={imgHeights}
-          >
-            <View
-              justify="center"
-              type="sashimi"
-              width={80}
-              round={6}
-            >
-              <Text style={{ fontWeight: "bold", color: "white" }} type="span">
-                3:46
-              </Text>
-            </View>
-          </Card>
+          {videos.length > 0 &&
+            videos.map(video => (
+              <Card
+                key={video.id}
+                cover={video.snippet.thumbnails.medium.url}
+                color="black"
+                onClick={() => console.log("video clicked")}
+                clickable
+                zoom
+                dimensions={dimensions}
+                imgHeight={imgHeights}
+              >
+                <View justify="center" type="sashimi" width={80} round={6}>
+                  <Text
+                    style={{ fontWeight: "bold", color: "white" }}
+                    type="span"
+                  >
+                    3:46
+                  </Text>
+                </View>
+              </Card>
+            ))}
         </Slider>
       </div>
     );
