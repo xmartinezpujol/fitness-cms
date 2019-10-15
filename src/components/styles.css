@@ -5,3 +5,15 @@ body{
 *{
     box-sizing: border-box;
 }
+
+/* React Slick */
+.slick-dots li button:before {
+    font-size: 16px;
+    color: #FF4242 !important;
+    opacity: 1 !important;
+}
+
+.slick-dots li.slick-active button:before {
+    color: #fff !important;
+    opacity: 1 !important;
+}
